@@ -1,1 +1,22 @@
-<p>contact-detail works!</p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title">{{ contact.name }}</h1>
+  </div>
+  <div class="panel-body flex-row">
+    <div class="media-left media-middle col-3">
+      <a href="#">
+        <img class="img-responsive media-object" src="{{ contact.imageUrl }}" alt="...">
+      </a>
+    </div>
+    <div class="col-3 media-right">
+      <button type="button" class="btn btn-info ">Edit</button>
+      <button type="button" class="btn btn-danger">Delete</button>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <ul class="list-group">
+      <li class="list-group-item"><b>Email:</b> {{ contact.email }}</li>
+      <li class="list-group-item"><b>Phone:</b> {{ contact.phone }}</li>
+    </ul>
+  </div>
+</div>
