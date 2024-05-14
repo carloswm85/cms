@@ -43,5 +43,5 @@ Add to `package.json` and run `npm run dev`:
 ```json
 "scripts": {
     "dev": "nodemon --exec ng serve"
-  },
+},
 ```
