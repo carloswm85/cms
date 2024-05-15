@@ -45,3 +45,7 @@ Add to `package.json` and run `npm run dev`:
     "dev": "nodemon --exec ng serve"
 },
 ```
+
+## Notes
+
+![alt text](image.png)
