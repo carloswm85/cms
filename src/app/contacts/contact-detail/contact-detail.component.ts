@@ -12,6 +12,7 @@ export class ContactDetailComponent {
     name: 'R. Kent Jackson',
     email: 'jacksonk@byui.edu',
     phone: '208-496-3771',
+    description: 'This is a description.',
     imageUrl: '../../assets/images/jacksonk.jpg',
     group: null,
   };

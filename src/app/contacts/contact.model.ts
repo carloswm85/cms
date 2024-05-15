@@ -3,6 +3,7 @@ export class Contact {
   public name: string; // name of the contact.
   public email: string; // email address of the contact.
   public phone: string; // phone number of the contact.
+  public description: string;
   public imageUrl: string; // URL of the photo image of the contact.
   public group: Contact[]; // attribute is only applicable to group contacts. It is an array of other contacts that belong to the group.
 
@@ -11,6 +12,7 @@ export class Contact {
     name: string,
     email: string,
     phone: string,
+    description: string,
     imageUrl: string,
     group: Contact[]
   ) {
@@ -18,6 +20,7 @@ export class Contact {
     this.name = name;
     this.email = email;
     this.phone = phone;
+    this.description = description;
     this.imageUrl = imageUrl;
     this.group = group;
   }
