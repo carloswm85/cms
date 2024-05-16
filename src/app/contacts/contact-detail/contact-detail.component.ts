@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Contact } from '../contact.model';
+import { Contact } from '../../models/contact.model';
 
 @Component({
   selector: 'app-contact-detail',
