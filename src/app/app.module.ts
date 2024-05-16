@@ -6,7 +6,7 @@ import { HeaderComponent } from './shared/header.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { ContactDetailComponent } from './contacts/contact-detail/contact-detail.component';
 import { ContactListComponent } from './contacts/contact-list/contact-list.component';
-import { ContactItemComponent } from './contact-item/contact-item.component';
+import { ContactItemComponent } from './contacts/contact-item/contact-item.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { DocumentListComponent } from './documents/document-list/document-list.component';
 import { DocumentItemComponent } from './documents/document-item/document-item.component';
