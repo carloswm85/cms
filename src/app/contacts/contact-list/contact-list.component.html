@@ -4,13 +4,16 @@
     <div class="btn btn-success">New Contact</div>
   </div>
 </div>
-<hr>
+<hr />
 
 <!-- BODY -->
 <div class="row">
   <div class="col-xs-12">
-
     <!-- LOOP ITEMS -->
-    <app-contact-item *ngFor="let contactItem of contacts" [contact]="contactItem"></app-contact-item>
+    <app-contact-item
+      *ngFor="let contactItem of contacts"
+      [contact]="contactItem"
+      (selectedContact)="onContactSelected(contactItem)"
+    ></app-contact-item>
   </div>
 </div>

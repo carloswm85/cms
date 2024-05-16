@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Contact } from '../contacts/contact.model';
 
 @Component({
@@ -8,4 +8,9 @@ import { Contact } from '../contacts/contact.model';
 })
 export class ContactItemComponent {
   @Input() contact: Contact;
+  @Output() selectedContact = new EventEmitter<void>();
+
+  onSelected() {
+    this.selectedContact.emit();
+  }
 }
