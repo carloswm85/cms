@@ -5,9 +5,9 @@ export class Message {
   public sender: string; // the sender of the message
 
   constructor(id: string, subject: string, msgText: string, sender: string) {
-    id = id;
-    subject = subject;
-    msgText = msgText;
-    sender = sender;
+    this.id = id;
+    this.subject = subject;
+    this.msgText = msgText;
+    this.sender = sender;
   }
 }
