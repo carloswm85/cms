@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev": "nodemon --exec ng serve",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "kill": "npx kill-port 4200"
   },
   "private": true,
   "dependencies": {
