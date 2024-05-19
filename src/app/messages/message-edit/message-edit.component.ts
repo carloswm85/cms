@@ -23,7 +23,6 @@ export class MessageEditComponent {
       newMsg,
       this.currentSender
     );
-    console.log(newMessage);
     this.addMessageEvent.emit(newMessage);
   }
 
