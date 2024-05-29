@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'CMS - WDD430';
 
-  selectedFeature: string = 'documents';
+  selectedFeature: string = 'message-list';
 
   switchView(selectedFeature: string) {
     this.selectedFeature = selectedFeature;
