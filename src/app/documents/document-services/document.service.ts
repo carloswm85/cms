@@ -6,7 +6,7 @@ import { MOCKDOCUMENTS } from '../document-data/MOCKDOCUMENTS';
   providedIn: 'root'
 })
 export class DocumentService {
-  documents: Document[] = [];
+  private documents: Document[] = [];
 
   constructor() {
     this.documents = MOCKDOCUMENTS;
