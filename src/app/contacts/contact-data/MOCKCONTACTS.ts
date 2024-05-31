@@ -132,6 +132,16 @@ export const MOCKCONTACTS: Contact[] = [
     imageUrl: '../../assets/images/thompsonda.jpg',
     group: null,
   },
+  // index 13
+  {
+    id: '99',
+    name: 'Carlos Mercado',
+    email: 'cm@byui.edu',
+    phone: '222',
+    description: 'This is some description',
+    imageUrl: '../../assets/images/carlos.png',
+    group: null,
+  },
 
   // teams
   // index 13
@@ -141,7 +151,7 @@ export const MOCKCONTACTS: Contact[] = [
     email: ' ',
     phone: ' ',
     description: 'This is some description',
-    imageUrl: ' ',
+    imageUrl: '../../../assets/images/team-logos/network-w.png',
     group: [
       {
         id: '2',
@@ -180,7 +190,7 @@ export const MOCKCONTACTS: Contact[] = [
     email: ' ',
     phone: ' ',
     description: ' ',
-    imageUrl: ' ',
+    imageUrl: '../../../assets/images/team-logos/software-w.png',
     group: [
       {
         id: '1',
@@ -228,7 +238,7 @@ export const MOCKCONTACTS: Contact[] = [
     email: ' ',
     phone: ' ',
     description: ' ',
-    imageUrl: ' ',
+    imageUrl: '../../../assets/images/team-logos/web-w.png',
     group: [
       {
         id: '15',
@@ -267,7 +277,7 @@ export const MOCKCONTACTS: Contact[] = [
     email: ' ',
     phone: ' ',
     description: ' ',
-    imageUrl: ' ',
+    imageUrl: '../../../assets/images/team-logos/database-w.png',
     group: [
       {
         id: '7',
@@ -306,7 +316,7 @@ export const MOCKCONTACTS: Contact[] = [
     email: ' ',
     phone: ' ',
     description: ' ',
-    imageUrl: ' ',
+    imageUrl: '../../../assets/images/team-logos/security-w.png',
     group: [
       {
         id: '5',
