@@ -18,19 +18,7 @@ export class ContactService {
   }
 
   getContact(id: string): Contact {
-    const singleContact = this.contacts[id];
-    if (singleContact == null) return null;
-    return this.contacts[id];
-    // OR
-    /**
-     * getContact(id: string): Contact {
-     * FOR each contact in the contacts list
-     * IF contact.id equals the id THEN
-     * RETURN contact
-     * ENDIF
-     * ENDFOR
-     * RETURN null
-     * }
-     */
+
+    return this.contacts.find(item => item.id == id) || null;
   }
 }
