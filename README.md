@@ -1,3 +1,5 @@
+By Aaron: https://github.com/hexaF6-NinjaMC/cms/blob/main/src/app/messages/message-item/message-item.component.ts
+
 # Cms
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
