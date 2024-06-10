@@ -12,7 +12,6 @@
 
 ---
 
-
 # CMS PROJECT NOTES
 
 ## Weekly Development
@@ -24,6 +23,13 @@
   2. Add a <router-outlet> tag to the component where the selected components are to be loaded.
   3. Add the [routerLink] directive to each HTML anchor tag that is responsible for loading a component when it is selected by the end user.
 - The `<router-outlet>` tag indicates the location where each of the main components defined in the `app-routing.module.ts` file will be loaded and displayed.
+
+Implement the Document Child Routes:
+
+- Child routes allow us to dynamically load and display sub-components. Steps
+  1. Define the child routes.
+  2. Add a `<router-outlet>` tag to specify the location of where the child components are to be loaded and displayed.
+  3. Define `[routerLink]` directives for the child components.
 
 ## Additional Information
 
