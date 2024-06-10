@@ -1,22 +1,29 @@
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-md-6">
     <!--Add tag to load the DocumentListComponent here-->
+
     <!-- Method 1 -->
     <!-- <app-document-list
     (selectedDocumentEvent)="selectedDocument = $event"
     ></app-document-list> -->
+
     <!-- Method 2 -->
     <app-document-list></app-document-list>
   </div>
 
-  <div class="col-md-4">
+  <div class="col-md-5">
     <!--Add tag to load the DocumentDetailComponent here-->
-    <app-document-detail
+
+    <!-- NEW -->
+    <router-outlet></router-outlet>
+
+    <!-- OLD -->
+    <!-- <app-document-detail
       *ngIf="selectedDocument; else infoDocText"
       [document]="selectedDocument"
     ></app-document-detail>
     <ng-template #infoDocText>
       <div class="col-md-5">Please, select a contact.</div>
-    </ng-template>
+    </ng-template> -->
   </div>
 </div>
