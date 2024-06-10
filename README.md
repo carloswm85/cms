@@ -23,6 +23,7 @@
   1. Define routes for each component to be loaded in a routing file.
   2. Add a <router-outlet> tag to the component where the selected components are to be loaded.
   3. Add the [routerLink] directive to each HTML anchor tag that is responsible for loading a component when it is selected by the end user.
+- The `<router-outlet>` tag indicates the location where each of the main components defined in the `app-routing.module.ts` file will be loaded and displayed.
 
 ## Additional Information
 

@@ -6,11 +6,14 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'CMS - WDD430';
+  title = 'CMS - Spring 2024 WDD430';
 
+  // OLD ROUTING IMPLEMENTATION
+  /*
   selectedFeature: string = 'message-list';
 
   switchView(selectedFeature: string) {
     this.selectedFeature = selectedFeature;
   }
+  */
 }
