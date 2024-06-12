@@ -18,8 +18,8 @@ export class DocumentService {
   }
 
   getDocument(id: string) {
-    const document = this.documents[id];
-    if (document == null) return null;
+    const document = this.documents.find(doc => doc.id == id);
+    console.log(document);if (document == null) return null;
     return document;
   }
 }
