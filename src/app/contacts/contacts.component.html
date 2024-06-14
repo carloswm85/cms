@@ -13,12 +13,16 @@
   <!-- 02 -->
   <div class="col-md-4">
     <h2>Contact Detail</h2>
-    <app-contact-detail
+    <!-- IMPLEMENTATION #1 -->
+    <!-- <app-contact-detail
       *ngIf="selectedContact; else infoText"
       [contact]="selectedContact"
     ></app-contact-detail>
     <ng-template #infoText>
       <div class="col-md-5">Please, select a contact.</div>
-    </ng-template>
+    </ng-template> -->
+
+    <!-- IMPLEMENTATION #2 -->
+    <router-outlet></router-outlet>
   </div>
 </div>
