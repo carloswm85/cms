@@ -7,9 +7,15 @@
 <!-- BODY -->
 <div class="col-12">
   <!-- LOOP ITEMS -->
+   <!-- NEW -->
   <app-contact-item
     *ngFor="let contactItem of contacts"
     [contact]="contactItem"
-    (selectedContact)="onContactSelected(contactItem)"
   ></app-contact-item>
+  <!-- OLD -->
+  <!-- <app-contact-item
+    *ngFor="let contactItem of contacts"
+    [contact]="contactItem"
+    (selectedContact)="onContactSelected(contactItem)"
+  ></app-contact-item> -->
 </div>

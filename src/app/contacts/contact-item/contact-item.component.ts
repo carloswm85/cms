@@ -17,6 +17,5 @@ export class ContactItemComponent {
     // this.selectedContact.emit();
     console.log(this.contact);
     this.contactService.contactSelectedEvent.emit(this.contact);
-
   }
 }
