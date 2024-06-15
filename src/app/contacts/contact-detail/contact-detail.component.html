@@ -5,16 +5,12 @@
   <div class="panel-body flex-row">
     <div class="media-left media-middle col-3">
       <a href="#">
-        <img
-          class="img-responsive media-object"
-          src="{{ contact.imageUrl }}"
-          alt="..."
-        />
+        <img class="img-responsive media-object" src="{{ contact.imageUrl }}" alt="..." />
       </a>
     </div>
     <div class="col-3 media-right">
       <a type="button" class="btn btn-info" routerLink="/contacts/{{contact.id}}/edit">Edit</a>
-      <a type="button" class="btn btn-danger">Delete</a>
+      <a href="#" type="button" class="btn btn-danger" (click)="onDelete()">Delete</a>
     </div>
   </div>
   <div class="panel-footer">

@@ -31,10 +31,16 @@ export class ContactListComponent implements OnInit {
   ]; */
   contacts: Contact[] = [];
 
-  constructor(private contactService: ContactService) { }
+  constructor(private contactService: ContactService) {}
 
   ngOnInit(): void {
     this.contacts = this.contactService.getContacts();
+    this.contactService.contactsChangedEvent.subscribe(
+      (contacts: Contact[]) => {
+        this.contacts = contacts;
+        console.log(this.contacts);
+      }
+    );
   }
 
   // OLD IMPLEMENTATION

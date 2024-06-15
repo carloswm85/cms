@@ -23,13 +23,18 @@ export class ContactDetailComponent {
   }; */
 
   constructor(
-    private contactServie: ContactService,
+    private contactService: ContactService,
     private router: Router,
     private route: ActivatedRoute
   ) {
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
-      this.contact = this.contactServie.getContact(this.id);
+      this.contact = this.contactService.getContact(this.id);
     });
+  }
+
+  onDelete() {
+    this.contactService.deleteContact(this.contact);
+    this.router.navigate(['contacts'], { relativeTo: this.route });
   }
 }
