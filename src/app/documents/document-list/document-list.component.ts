@@ -21,7 +21,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   //   new Document('id2', 'name2', 'description2', 'url2', null),
   //   new Document('id3', 'name3', 'description3', 'url3', null),
   // ];
-  @Output() selectedDocumentEvent = new EventEmitter<Document>();
+  @Output() selectedDocumentEvent = new EventEmitter<void>();
   documents: Document[] = [];
   subscription: Subscription;
 

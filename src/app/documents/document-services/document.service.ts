@@ -45,8 +45,7 @@ export class DocumentService {
     // We then emit the documentChangedEvent to signal that a change
     // has been made to the document list and pass it a copy of the document
     // list stored in the DocumentService class.
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEventUsingSubject.next(documentsListClone);
+    this.documentListChangedEventUsingSubject.next(this.documents.slice());
   }
 
   ///
