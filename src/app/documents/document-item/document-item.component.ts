@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Document } from "../../models/document.model";
 
 @Component({
@@ -7,14 +7,6 @@ import { Document } from "../../models/document.model";
   styleUrl: './document-item.component.css',
 })
 export class DocumentItemComponent {
-  @Input() document: Document;
-  @Output() selectedDocument = new EventEmitter<void>();
+  @Input() document!: Document;
 
-  onSelect() {
-    this.selectedDocument.emit();
-  }
-
-  onKeyup() {
-    return;
-  }
 }

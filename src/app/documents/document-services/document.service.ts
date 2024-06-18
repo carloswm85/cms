@@ -1,21 +1,26 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Document } from '../../models/document.model';
 import { MOCKDOCUMENTS } from '../document-data/MOCKDOCUMENTS';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DocumentService {
-  private documents: Document[] = [];
+  // documentChangedEvent = new EventEmitter<Document[]>();
   documentSelectedEvent = new EventEmitter<Document>();
-  documentChangedEvent = new EventEmitter<Document[]>();
+  documentListChangedEventUsingSubject = new Subject<Document[]>();
+
+  private documents: Document[] = [];
+  private maxDocumentId: number;
 
   constructor() {
     this.documents = MOCKDOCUMENTS;
+    this.maxDocumentId = this.getMaxId();
   }
 
   getDocuments() {
-    return this.documents.slice();
+    return this.documents.slice() || null;
   }
 
   getDocument(id: string) {
@@ -27,7 +32,7 @@ export class DocumentService {
 
   // The method is aborted if no document was passed.
   deleteDocument(document: Document) {
-    if (!document) {
+    if (document == null || document == undefined) {
       return;
     }
     const pos = this.documents.indexOf(document);
@@ -40,6 +45,57 @@ export class DocumentService {
     // We then emit the documentChangedEvent to signal that a change
     // has been made to the document list and pass it a copy of the document
     // list stored in the DocumentService class.
-    this.documentChangedEvent.emit(this.documents.slice()); // EMIT TO THE EVER SUBSCRIPTOR
+    const documentsListClone = this.documents.slice();
+    this.documentListChangedEventUsingSubject.next(documentsListClone);
   }
+
+  ///
+  getMaxId(): number {
+    if (!this.documents || this.documents.length === 0) {
+      return -1; // Or any appropriate value indicating no documents are present
+    }
+
+    let maxId = -Infinity;
+
+    this.documents.forEach((doc) => {
+      const currentId = Number(doc.id);
+      if (!isNaN(currentId) && currentId > maxId) {
+        maxId = currentId;
+      }
+    });
+
+    return maxId;
+  }
+
+  addDocument(newDocument: Document) {
+    if (newDocument == null || newDocument == undefined) {
+      return;
+    }
+
+    this.maxDocumentId++;
+    newDocument.id = this.maxDocumentId.toString();
+    this.documents.push(newDocument);
+
+    const documentsListClone = this.documents.slice();
+    this.documentListChangedEventUsingSubject.next(documentsListClone);
+  }
+
+  updateDocument(originalDocument: Document, newDocument: Document) {
+    if (
+      originalDocument == null ||
+      originalDocument == undefined ||
+      newDocument == null ||
+      newDocument == undefined
+    ) {
+      return;
+    }
+
+    const pos = this.documents.indexOf(originalDocument);
+    if (pos < 0) return;
+    newDocument.id = originalDocument.id
+    this.documents[pos] = newDocument;
+    const documentsListClone = this.documents.slice();
+    this.documentListChangedEventUsingSubject.next(documentsListClone);
+  }
+  //
 }

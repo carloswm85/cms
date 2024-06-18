@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Contact } from '../../models/contact.model';
 import { ContactService } from '../contact-services/contact.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contact-list',
   templateUrl: './contact-list.component.html',
   styleUrl: './contact-list.component.css',
 })
-export class ContactListComponent implements OnInit {
+export class ContactListComponent implements OnInit, OnDestroy {
   /* @Output() selectedContactEvent = new EventEmitter<Contact>(); */
   /* contacts: Contact[] = [
     {
@@ -30,17 +31,22 @@ export class ContactListComponent implements OnInit {
     },
   ]; */
   contacts: Contact[] = [];
+  subscription: Subscription;
 
   constructor(private contactService: ContactService) {}
 
   ngOnInit(): void {
     this.contacts = this.contactService.getContacts();
-    this.contactService.contactsChangedEvent.subscribe(
+    this.subscription = this.contactService.contactListChangedEventUsingSubject.subscribe(
       (contacts: Contact[]) => {
         this.contacts = contacts;
         console.log(this.contacts);
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   // OLD IMPLEMENTATION
