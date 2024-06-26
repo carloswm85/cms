@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Contact } from '../../models/contact.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-contact-edit',
@@ -9,5 +10,9 @@ import { Contact } from '../../models/contact.model';
 export class ContactEditComponent {
   groupContacts: Contact[];
 
-  onCancel() {}
+  onCancel() { }
+
+  onSubmit(form: NgForm) {
+    console.log(form.value);
+  }
 }

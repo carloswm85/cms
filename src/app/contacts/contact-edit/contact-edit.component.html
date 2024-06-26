@@ -1,6 +1,9 @@
 <div class="panel panel-default">
   <div class="panel-body">
-    <form id="contact-edit">
+    <!-- FORM -->
+    <form id="contact-edit" #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+      <!-- 01 -->
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="name">Name:</label>
@@ -14,6 +17,7 @@
         </div>
       </div>
 
+      <!-- 02 -->
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="email">Email:</label>
@@ -27,6 +31,7 @@
         </div>
       </div>
 
+      <!-- 03 -->
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="phone">Phone:</label>
@@ -40,6 +45,7 @@
         </div>
       </div>
 
+      <!-- 04 -->
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="imageUrl">Image URL:</label>
@@ -53,8 +59,9 @@
         </div>
       </div>
 
+      <!-- 05 -->
       <div class="row">
-        <div class="form-group">
+        <div class="form-group col-sm-12">
           <label for="groupList">Group Contacts:</label>
 
           <div class="row min-h" id="groupList">
@@ -80,6 +87,7 @@
         </div>
       </div>
 
+      <!-- BUTTONS -->
       <div class="row">
         <div class="col-xs-12 btn-toolbar">
           <button class="btn btn-success" type="submit">Save</button>
@@ -88,6 +96,8 @@
           </button>
         </div>
       </div>
+
+      <!-- END FORM -->
     </form>
   </div>
 </div>

@@ -7,7 +7,9 @@
         onSubmit() method when the form is submitted. Pass to this method a
         reference to the FormGroup that you saved in the local reference (f).
     -->
+    <!-- FORM -->
     <form id="document-edit" (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <!-- 01 -->
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="name">Document Title:</label>
@@ -25,6 +27,7 @@
         </div>
       </div>
 
+      <!-- 02 -->
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="description">Document Description:</label>
@@ -40,6 +43,7 @@
         </div>
       </div>
 
+      <!-- 03 -->
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="url">Document URL:</label>
@@ -56,18 +60,26 @@
         </div>
       </div>
 
+      <!-- Message -->
       <div *ngIf="!f.valid">
-        <p class="alert alert-danger">The Document Title and Document URL are required fields.</p>
+        <p class="alert alert-danger">
+          The Document Title and Document URL are required fields.
+        </p>
       </div>
 
+      <!-- BUTTONS -->
       <div class="row">
         <div class="col-xs-12 btn-toolbar">
-          <button class="btn btn-success" type="submit" [disabled]="!f.valid">Save</button>
+          <button class="btn btn-success" type="submit" [disabled]="!f.valid">
+            Save
+          </button>
           <button class="btn btn-primary" type="button" (click)="onCancel()">
             Cancel
           </button>
         </div>
       </div>
+
+      <!-- END FORM -->
     </form>
   </div>
 </div>
