@@ -1,15 +1,26 @@
 <div class="panel panel-default">
   <div class="panel-body">
-    <form id="document-edit">
+    <!--
+      1. Define a local reference (#f) in the <form> element and assign a
+        reference to the FormGroup (ngForm) to it.
+      2.Add an ngSubmit event binding to the <form> HTML element to call the
+        onSubmit() method when the form is submitted. Pass to this method a
+        reference to the FormGroup that you saved in the local reference (f).
+    -->
+    <form id="document-edit" (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="name">Document Title:</label>
           <input
             type="text"
             id="name"
+            name="name"
+            [ngModel]="document?.description"
+            required
             class="form-control"
             size="120"
             max="120"
+            #name
           />
         </div>
       </div>
@@ -20,6 +31,8 @@
           <input
             type="text"
             id="description"
+            name="description"
+            [ngModel]="document?.description"
             class="form-control"
             size="120"
             max="255"
@@ -33,6 +46,9 @@
           <input
             type="text"
             id="url"
+            name="url"
+            [ngModel]="document?.url"
+            required
             class="form-control"
             size="150"
             max="255"
@@ -40,9 +56,13 @@
         </div>
       </div>
 
+      <div *ngIf="!f.valid">
+        <p class="alert alert-danger">The Document Title and Document URL are required fields.</p>
+      </div>
+
       <div class="row">
         <div class="col-xs-12 btn-toolbar">
-          <button class="btn btn-success" type="submit">Save</button>
+          <button class="btn btn-success" type="submit" [disabled]="!f.valid">Save</button>
           <button class="btn btn-primary" type="button" (click)="onCancel()">
             Cancel
           </button>
