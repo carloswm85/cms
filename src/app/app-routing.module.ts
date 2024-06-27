@@ -11,7 +11,7 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
 
 const appRoutes: Routes = [
   // an empty path '' is part of every other path
-  { path: '', redirectTo: '/documents', pathMatch: 'full' },
+  { path: '', redirectTo: '/contacts', pathMatch: 'full' },
   {
     path: 'documents',
     component: DocumentsComponent,
@@ -26,7 +26,6 @@ const appRoutes: Routes = [
       { path: ':id/edit', component: DocumentEditComponent },
     ],
   },
-  { path: 'messages', component: MessageListComponent },
   {
     path: 'contacts',
     component: ContactsComponent,
@@ -36,6 +35,7 @@ const appRoutes: Routes = [
       { path: ':id/edit', component: ContactEditComponent },
     ],
   },
+  { path: 'messages', component: MessageListComponent },
 ];
 
 @NgModule({

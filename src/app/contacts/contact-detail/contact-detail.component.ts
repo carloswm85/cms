@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Contact } from '../../models/contact.model';
-import { ContactService } from '../contact-services/contact.service';
+import { Contact } from '../contact.model';
+import { ContactService } from '../contact.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
@@ -34,7 +34,9 @@ export class ContactDetailComponent {
   }
 
   onDelete() {
-    this.contactService.deleteContact(this.contact);
-    this.router.navigate(['contacts'], { relativeTo: this.route });
+    if (this.contact) {
+      this.contactService.deleteContact(this.contact);
+      void this.router.navigate(['/contacts']);
+    }
   }
 }

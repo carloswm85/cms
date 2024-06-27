@@ -125,11 +125,23 @@
                 </button>
               </div>
             </div>
-            <span class="dragMsg" *ngIf="groupContacts?.length < 1"
-              >Drag contacts in group here</span
-            >
+            <span class="dragMsg" *ngIf="groupContacts?.length < 1">
+              Drag contacts in group here
+            </span>
           </div>
         </div>
+      </div>
+
+      <!-- 06 -->
+      <div class="form-group gray-border">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          [ngModel]="contact?.description"
+          rows="3"
+          class="form-control"
+        ></textarea>
       </div>
 
       <!-- Error Message -->

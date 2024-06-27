@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Document } from '../../models/document.model';
+import { Document } from '../document.model';
 import { MOCKDOCUMENTS } from '../document-data/MOCKDOCUMENTS';
 import { Subject } from 'rxjs';
 
@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 export class DocumentService {
   // documentChangedEvent = new EventEmitter<Document[]>();
   documentSelectedEvent = new EventEmitter<Document>();
-  documentListChangedEventUsingSubject = new Subject<Document[]>();
+  documentListChangedEvent = new Subject<Document[]>();
 
   private documents: Document[] = [];
   private maxDocumentId: number;
@@ -45,7 +45,8 @@ export class DocumentService {
     // We then emit the documentChangedEvent to signal that a change
     // has been made to the document list and pass it a copy of the document
     // list stored in the DocumentService class.
-    this.documentListChangedEventUsingSubject.next(this.documents.slice());
+    const documentListClone = this.documents.slice();
+    this.documentListChangedEvent.next(documentListClone);
   }
 
   ///
@@ -76,7 +77,7 @@ export class DocumentService {
     this.documents.push(newDocument);
 
     const documentsListClone = this.documents.slice();
-    this.documentListChangedEventUsingSubject.next(documentsListClone);
+    this.documentListChangedEvent.next(documentsListClone);
   }
 
   updateDocument(originalDocument: Document, newDocument: Document) {
@@ -91,10 +92,10 @@ export class DocumentService {
 
     const pos = this.documents.indexOf(originalDocument);
     if (pos < 0) return;
-    newDocument.id = originalDocument.id
+    newDocument.id = originalDocument.id;
     this.documents[pos] = newDocument;
     const documentsListClone = this.documents.slice();
-    this.documentListChangedEventUsingSubject.next(documentsListClone);
+    this.documentListChangedEvent.next(documentsListClone);
   }
   //
 }

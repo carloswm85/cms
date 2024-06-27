@@ -10,7 +10,8 @@
     </div>
     <div class="col-3 media-right">
       <a type="button" class="btn btn-info" routerLink="/contacts/{{contact.id}}/edit">Edit</a>
-      <a href="#" type="button" class="btn btn-danger" (click)="onDelete()">Delete</a>
+      <!-- HTML SYNTAX FIX -->
+      <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
     </div>
   </div>
   <div class="panel-footer">

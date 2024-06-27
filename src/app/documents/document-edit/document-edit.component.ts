@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
-import { Document } from '../../models/document.model';
+import { Document } from '../document.model';
 import { DocumentService } from '../document-services/document.service';
 
 @Component({
@@ -27,6 +27,10 @@ export class DocumentEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Implement the ngOnInit() lifecycle method. This method needs to subscribe
+    // to the current route and get the value of the id parameter (if it exists)
+    // from the URL. If the id has a value, the form is being used to edit an
+    // existing item. Get the item and make a clone of it.
     this.route.params.subscribe((params: Params) => {
       this.documentId = +params['id'];
 

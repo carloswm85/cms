@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Document } from "../../models/document.model";
+import { Document } from '../document.model';
 
 @Component({
   selector: 'app-document-item',
@@ -8,5 +8,4 @@ import { Document } from "../../models/document.model";
 })
 export class DocumentItemComponent {
   @Input() document!: Document;
-
 }

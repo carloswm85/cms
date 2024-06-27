@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Document } from '../../models/document.model';
+import { Document } from '../document.model';
 import { DocumentService } from '../document-services/document.service';
-import { WindRefService } from '../../services/wind-ref.service';
+import { WindRefService } from '../../wind-ref.service';
 
 @Component({
   selector: 'app-document-detail',
@@ -41,6 +41,6 @@ export class DocumentDetailComponent implements OnInit {
     console.log(this.document);
     this.documentService.deleteDocument(this.document);
     //  route back to the '/documents' URL
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['/documents']);
   }
 }
