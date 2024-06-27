@@ -1,7 +1,26 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <!-- FORM -->
-    <form id="contact-edit" #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <form id="contact-edit" (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <!--
+
+      Map each of the input fields in the form to a corresponding property of
+      the Contact object.
+      1. Add the `name` attribute to each input field in the form.
+      2. Add the `ngModel` directive to each input field and assign the
+      corresponding property of the Contact object (for example,
+      [ngModel]=contact?.name).
+      3. Add a local reference (e.g. #name) to the field and assign the ngModel
+      for this field. This allows you to reference the value and the state of
+      the field in other HTML tags in the form.
+
+      -->
+
+      <!--
+        Add a local reference (e.g. #name) to the field and assign the
+        ngModel for this field. This allows you to reference the value and the
+        state of the field in other HTML tags in the form.
+      -->
 
       <!-- 01 -->
       <div class="row">
@@ -10,7 +29,11 @@
           <input
             type="text"
             id="name"
-            class="form-control required"
+            name="name"
+            [ngModel]="contact?.name"
+            #name="ngModel"
+            required
+            class="form-control invalid"
             size="120"
             max="120"
           />
@@ -24,10 +47,20 @@
           <input
             type="text"
             id="email"
-            class="form-control required"
+            name="email"
+            [ngModel]="contact?.email"
+            #email="ngModel"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+            required
+            class="form-control"
             size="120"
             max="255"
           />
+        </div>
+        <div *ngIf="!email.valid && email.touched">
+          <p class="alert alert-danger" role="alert">
+            Enter a valid <strong>Email</strong> address.
+          </p>
         </div>
       </div>
 
@@ -38,10 +71,19 @@
           <input
             type="text"
             id="phone"
+            name="phone"
+            [ngModel]="contact?.phone"
+            #phone="ngModel"
+            pattern="\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*"
             class="form-control invalid"
             size="150"
             max="255"
           />
+        </div>
+        <div *ngIf="!phone.valid && phone.touched">
+          <p class="alert alert-danger" role="alert">
+            Enter a valid <strong>Phone</strong> number.
+          </p>
         </div>
       </div>
 
@@ -52,6 +94,9 @@
           <input
             type="text"
             id="imageUrl"
+            name="imageUrl"
+            [ngModel]="contact?.imageUrl"
+            #imageUrl
             class="form-control"
             size="150"
             max="255"
@@ -87,10 +132,22 @@
         </div>
       </div>
 
+      <!-- Error Message -->
+      <div
+        *ngIf="(!name.valid && name.touched) || (!email.valid && email.touched)"
+      >
+        <p class="alert alert-danger" role="alert">
+          The <strong>Name</strong> and <strong>Email</strong> fields are
+          required.
+        </p>
+      </div>
+
       <!-- BUTTONS -->
       <div class="row">
         <div class="col-xs-12 btn-toolbar">
-          <button class="btn btn-success" type="submit">Save</button>
+          <button class="btn btn-success" type="submit" [disabled]="!f.valid">
+            Save
+          </button>
           <button class="btn btn-primary" type="button" (click)="onCancel()">
             Cancel
           </button>

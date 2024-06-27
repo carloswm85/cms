@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Contact } from '../../models/contact.model';
 import { NgForm } from '@angular/forms';
 
@@ -8,9 +8,11 @@ import { NgForm } from '@angular/forms';
   styleUrl: './contact-edit.component.css',
 })
 export class ContactEditComponent {
+  @ViewChild('f') contactForm!: NgForm;
   groupContacts: Contact[];
+  contact: Contact;
 
-  onCancel() { }
+  onCancel() {}
 
   onSubmit(form: NgForm) {
     console.log(form.value);
