@@ -1,6 +1,5 @@
 - [CMS PROJECT NOTES](#cms-project-notes)
-  - [Weekly Development](#weekly-development)
-    - [W06: Routing](#w06-routing)
+  - [Tutorials](#tutorials)
   - [Additional Information](#additional-information)
 - [ANGULAR NOTES](#angular-notes)
   - [Development server](#development-server)
@@ -14,28 +13,19 @@
 
 # CMS PROJECT NOTES
 
-## Weekly Development
+## Tutorials
 
-### W06: Routing
-
-- A much simpler way of doing this is to use Angular routing. A route is defined for each of the three components. Each route maps a URL path to a component that is to be loaded. When the end user enters a URL path or selects an anchor tag that matches the URL path defined in one of the routes, it automatically loads and displays the corresponding component into the DOM.
-  1. Define routes for each component to be loaded in a routing file.
-  2. Add a <router-outlet> tag to the component where the selected components are to be loaded.
-  3. Add the [routerLink] directive to each HTML anchor tag that is responsible for loading a component when it is selected by the end user.
-- The `<router-outlet>` tag indicates the location where each of the main components defined in the `app-routing.module.ts` file will be loaded and displayed.
-
-Implement the Document Child Routes:
-
-- Child routes allow us to dynamically load and display sub-components. Steps
-  1. Define the child routes.
-  2. Add a `<router-outlet>` tag to specify the location of where the child components are to be loaded and displayed.
-  3. Define `[routerLink]` directives for the child components.
+- Drag and drop: https://material.angular.io/cdk/drag-drop/overview
+  - Angular Material CDK — Drag and Drop between Lists [Mid-level, 2021] [🔗](https://youtu.be/O489gFEoj-o)
+  - Course original instructions using old *Drag and Drop Angular 2 Module* [🔗](https://byui.instructure.com/courses/294156/pages/w08-assignment-instructions#Install-the-Drag-and-Drop-Angular-2-Module)
 
 ## Additional Information
 
 By Aaron: https://github.com/hexaF6-NinjaMC/cms/blob/main/src/app/messages/message-item/message-item.component.ts
 
 ---
+
+*(Generated Text)*
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
 

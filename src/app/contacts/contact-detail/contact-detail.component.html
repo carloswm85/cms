@@ -16,8 +16,9 @@
   </div>
   <div class="panel-footer">
     <ul class="list-group">
-      <li class="list-group-item"><b>Email:</b> {{ contact.email }}</li>
-      <li class="list-group-item"><b>Phone:</b> {{ contact.phone }}</li>
+      <li class="list-group-item"><b>Email:</b> {{ contact.email === ' ' ? 'No' : contact.email }}</li>
+      <li class="list-group-item"><b>Phone:</b> {{ contact.phone === ' ' ? 'No' : contact.phone }}</li>
+      <li class="list-group-item"><b>Has Group Items Assigned:</b> {{ contact.group === null ? 'No' : contact.group.length }}</li>
     </ul>
   </div>
 </div>
