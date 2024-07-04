@@ -1,6 +1,8 @@
 - [CMS PROJECT NOTES](#cms-project-notes)
   - [Tutorials](#tutorials)
   - [Additional Information](#additional-information)
+  - [Explanations](#explanations)
+    - [Pipe Use in Template Files](#pipe-use-in-template-files)
 - [ANGULAR NOTES](#angular-notes)
   - [Development server](#development-server)
   - [Code scaffolding](#code-scaffolding)
@@ -22,6 +24,18 @@
 ## Additional Information
 
 By Aaron: https://github.com/hexaF6-NinjaMC/cms/blob/main/src/app/messages/message-item/message-item.component.ts
+
+## Explanations
+
+### Pipe Use in Template Files
+
+```ts
+*ngFor="let contactItem of contacts | contactsFilter : term : 'contactItem.name' "
+```
+
+- `contactsFilter` - `ContactsFilterPipe` name for template binding in `contact-list.component.html`
+- `term` - Property string value in `contact-list.component.ts`
+- `'contactItem.name'` - Value from looped item to pass to the pipe.
 
 ---
 

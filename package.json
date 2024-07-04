@@ -3,13 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --o",
+    "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev": "nodemon --exec ng serve",
+    "clean": "rmdir /s /q node_modules",
+    "reinstall": "npm run clean && npm install --verbose",
+    "rebuild": "npm run clean && npm install && rmdir /s /q dist && npm run build --prod",
+    "kill": "npx kill-port 4200",
     "lint": "ng lint",
-    "kill": "npx kill-port 4200"
+    "lintf": "ng lint --fix"
   },
   "private": true,
   "dependencies": {

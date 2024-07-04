@@ -1,21 +1,53 @@
 <!-- HEADER -->
-<div class="col-12">
-  <div class="btn btn-success" routerLink="new">New Contact</div>
+<div class="panel panel-default">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="input-group">
+              <!-- Add the search box input field here -->
+              <input
+                type="text"
+                name="search"
+                id="search"
+                #searchBox
+                (keyup)="search(searchBox.value)"
+                class="form-control"
+                placeholder="Enter a search value"
+              />
+
+              <div
+                role="none"
+                class="glyphicon glyphicon-search input-group-addon"
+                (click)="search(searchBox.value)"
+              ></div>
+            </div>
+            <div class="">
+              <a class="btn btn-success" [routerLink]="['new']">New Contact</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 <hr />
 
 <!-- BODY -->
 <div class="col-12">
   <!-- LOOP ITEMS -->
-   <!-- NEW -->
-  <app-contact-item
-    *ngFor="let contactItem of contacts"
+  <!-- NEW -->
+   
+  <cms-contact-item
+    *ngFor="let contactItem of contacts | contactsFilter : term : 'contactItem.name' "
     [contact]="contactItem"
-  ></app-contact-item>
+  ></cms-contact-item>
   <!-- OLD -->
-  <!-- <app-contact-item
+  <!-- <cms-contact-item
     *ngFor="let contactItem of contacts"
     [contact]="contactItem"
     (selectedContact)="onContactSelected(contactItem)"
-  ></app-contact-item> -->
+  ></cms-contact-item> -->
 </div>
