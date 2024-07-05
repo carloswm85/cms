@@ -124,7 +124,8 @@ export class DocumentService {
           this.maxDocumentId = this.getMaxId();
           this.documents.sort((a, b) => +a.id - +b.id); // Sort the list of documents by id
           const clonedList = this.documents.slice();
-          this.documentListChangedEvent.next(clonedList); // Emit the next document list change event
+          // Emit the next document list change event
+          this.documentListChangedEvent.next(clonedList);
         },
         // error method
         (error: unknown) => {
