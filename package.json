@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev": "nodemon --exec ng serve",
+    "server": "nodemon server.js",
     "clean": "rmdir /s /q node_modules",
     "reinstall": "npm run clean && npm install --verbose",
     "rebuild": "npm run clean && npm install && rmdir /s /q dist && npm run build --prod",
@@ -30,6 +31,8 @@
     "bootstrap": "^3.4.1",
     "cookie-parser": "^1.4.6",
     "express": "^4.19.2",
+    "mongoose": "^8.5.0",
+    "mongoose-unique-validator": "^5.0.1",
     "morgan": "^1.10.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -54,7 +57,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "nodemon": "^3.1.0",
+    "nodemon": "^3.1.4",
     "typescript": "~5.4.2"
   }
 }

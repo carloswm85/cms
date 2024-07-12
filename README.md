@@ -1,4 +1,4 @@
-- [CMS PROJECT NOTES](#cms-project-notes)
+- [CMS PROJECT NOTES: Church Content Management System](#cms-project-notes-church-content-management-system)
   - [Tutorials](#tutorials)
   - [Additional Information](#additional-information)
   - [Explanations](#explanations)
@@ -13,7 +13,7 @@
 
 ---
 
-# CMS PROJECT NOTES
+# CMS PROJECT NOTES: Church Content Management System
 
 ## Tutorials
 
