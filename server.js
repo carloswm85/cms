@@ -10,6 +10,7 @@ var mongoose = require("mongoose");
 // import the routing file to handle the default (index) route
 var index = require("./server/routes/app");
 
+
 // HTTP methods for Documents, Messages and Contacts
 const messagesRoutes = require('./server/routes/messages');
 const contactsRoutes = require('./server/routes/contacts');
@@ -30,11 +31,13 @@ var app = express(); // create an instance of express
 
 // Tell express to use the following parsers for POST data
 app.use(bodyParser.json());
+
 app.use(
   bodyParser.urlencoded({
     extended: false,
   })
 );
+
 app.use(cookieParser());
 
 app.use(logger("dev")); // Tell express to use the Morgan logger
@@ -59,6 +62,7 @@ app.use(express.static(path.join(__dirname, "dist/cms/browser")));
 
 // Tell express to map the default route ('/') to the index route
 app.use("/", index);
+// Then map the remaining routes
 app.use("/messages", messagesRoutes);
 app.use("/contacts", contactsRoutes);
 app.use('/documents', documentsRoutes);
