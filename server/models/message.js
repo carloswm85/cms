@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const unusedLinkUseForReferenceToFile = require("../../src/app/messages/message.model");
+/* const unusedLinkUseForReferenceToFile = require("../../src/app/messages/message.model"); */
 
 const messageSchema = mongoose.Schema({
   id: { type: String, required: true },

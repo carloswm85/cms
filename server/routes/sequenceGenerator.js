@@ -10,7 +10,7 @@ var sequenceId = null;
 // Define the SequenceGenerator constructor function
 function SequenceGenerator() {
   // Find a single Sequence document from the database
-  Sequence.findOne().exec(function (err, sequence) {
+  Sequence.findOne().then((res,err, sequence) => {
     if (err) {
       // If there is an error, return a 500 status and an error message
       return res.status(500).json({
@@ -19,6 +19,9 @@ function SequenceGenerator() {
       });
     }
 
+     if (this.item === undefined) {
+       return;
+     }
     // If the Sequence document is found, set the initial values for IDs and sequenceId
     sequenceId = sequence._id;
     maxDocumentId = sequence.maxDocumentId;
