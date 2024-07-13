@@ -12,7 +12,7 @@ const Contact = require("../models/contact");
 // Define a GET endpoint to fetch all contacts
 router.get("/", (req, res, next) => {
   Contact.find() // Retrieve all contacts from the collection
-    .populate('group')
+    .populate("group")
     .then((contacts) => {
       // Respond with status 200 (OK) and send the contacts as JSON
       res.status(200).json({
