@@ -1,71 +1,62 @@
 // Import the Sequence model
-var Sequence = require("../models/sequence");
+var sequence = require("../models/sequence");
 
-// Initialize variables to hold the maximum IDs for different collections
-var maxDocumentId;
-var maxMessageId;
-var maxContactId;
-var sequenceId = null;
+let Sequence = sequence;
 
-// Define the SequenceGenerator constructor function
+let maxDocumentId;
+let maxMessageId;
+let maxContactId;
+let sequenceId = null;
+
 function SequenceGenerator() {
-  // Find a single Sequence document from the database
-  Sequence.findOne().then((res,err, sequence) => {
-    if (err) {
-      // If there is an error, return a 500 status and an error message
-      return res.status(500).json({
-        title: "An error occurred",
-        error: err,
-      });
-    }
+  Sequence.findOne()
+    .then((sequence) => {
+      sequenceId = sequence._id;
+      maxDocumentId = sequence.maxDocumentId;
+      maxMessageId = sequence.maxMessageId;
+      maxContactId = sequence.maxContactId;
 
-     if (this.item === undefined) {
-       return;
-     }
-    // If the Sequence document is found, set the initial values for IDs and sequenceId
-    sequenceId = sequence._id;
-    maxDocumentId = sequence.maxDocumentId;
-    maxMessageId = sequence.maxMessageId;
-    maxContactId = sequence.maxContactId;
-  });
+      console.log(">> SERVER:SEQUENCEGENERATOR:FINDONE:sequence: ", sequence);
+    })
+    .catch((err) => {
+      console.error(err);
+      // return null;
+    });
 }
 
-// Define the nextId method on the SequenceGenerator prototype
 SequenceGenerator.prototype.nextId = function (collectionType) {
-  var updateObject = {}; // Object to hold the field to update
-  var nextId; // Variable to hold the next ID
+  let updateObject = {};
+  let nextId;
 
-  // Determine which collection type is being updated
-  switch (collectionType) {
+  switch (collectionType.toLowerCase()) {
     case "documents":
-      maxDocumentId++; // Increment the document ID
-      updateObject = { maxDocumentId: maxDocumentId }; // Set the update object
-      nextId = maxDocumentId; // Set the next ID
+      maxDocumentId++;
+      updateObject = { maxDocumentId: maxDocumentId };
+      nextId = maxDocumentId;
       break;
     case "messages":
-      maxMessageId++; // Increment the message ID
-      updateObject = { maxMessageId: maxMessageId }; // Set the update object
-      nextId = maxMessageId; // Set the next ID
+      maxMessageId++;
+      updateObject = { maxMessageId: maxMessageId };
+      nextId = maxMessageId;
       break;
     case "contacts":
-      maxContactId++; // Increment the contact ID
-      updateObject = { maxContactId: maxContactId }; // Set the update object
-      nextId = maxContactId; // Set the next ID
+      maxContactId++;
+      updateObject = { maxContactId: maxContactId };
+      nextId = maxContactId;
       break;
     default:
-      return -1; // Return -1 if the collection type is not recognized
+      return -1;
   }
 
-  // Update the Sequence document in the database with the new maximum ID
-  Sequence.update({ _id: sequenceId }, { $set: updateObject }, function (err) {
-    if (err) {
-      // Log the error if there is a problem with the update
+  Sequence.updateOne({ _id: sequenceId }, { $set: updateObject }).catch(
+    (err) => {
       console.log("nextId error = " + err);
-      return null; // Return null if there is an error
+      return null;
     }
-  });
+  );
 
-  return nextId; // Return the next ID
+  console.log(">> SERVER:SEQUENCEGENERATOR:nextId: ", nextId);
+  return nextId;
 };
 
 // Export an instance of the SequenceGenerator

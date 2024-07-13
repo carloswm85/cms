@@ -10,11 +10,10 @@ var mongoose = require("mongoose");
 // import the routing file to handle the default (index) route
 var index = require("./server/routes/app");
 
-
 // HTTP methods for Documents, Messages and Contacts
-const messagesRoutes = require('./server/routes/messages');
-const contactsRoutes = require('./server/routes/contacts');
-const documentsRoutes = require('./server/routes/documents');
+const messagesRoutes = require("./server/routes/messages");
+const contactsRoutes = require("./server/routes/contacts");
+const documentsRoutes = require("./server/routes/documents");
 
 // ... ADD CODE TO IMPORT YOUR ROUTING FILES HERE ...
 // establish a connection to the mongo LOCAL database
@@ -22,6 +21,7 @@ mongoose
   .connect(`mongodb://localhost:27017/cms`)
   .then(() => {
     console.log("Connected to DB!");
+    console.log("//========================================================//");
   })
   .catch(() => {
     console.log("Connection failed!");
@@ -65,7 +65,7 @@ app.use("/", index);
 // Then map the remaining routes
 app.use("/messages", messagesRoutes);
 app.use("/contacts", contactsRoutes);
-app.use('/documents', documentsRoutes);
+app.use("/documents", documentsRoutes);
 
 // ... ADD YOUR CODE TO MAP YOUR URL'S TO ROUTING FILES HERE ...
 
@@ -84,5 +84,5 @@ const server = http.createServer(app);
 // Tell the server to start listening on the provided port
 server.listen(port, function () {
   console.log("API running on localhost: " + port);
-  console.log("http://localhost:"+ port);
+  console.log("http://localhost:" + port);
 });
