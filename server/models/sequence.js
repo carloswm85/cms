@@ -6,7 +6,9 @@ const sequenceSchema = mongoose.Schema({
   maxContactId: { type: Number },
 });
 
-module.exports = mongoose.model("Sequence", sequenceSchema);
+const sequence = mongoose.model("Sequence", sequenceSchema);
+
+module.exports = sequence;
 
 // Example item from Mongo database
 /*

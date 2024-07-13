@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-/* const unusedLinkUseForReferenceToFile = require("../../src/app/contacts/contact.model"); */
 
 const contactSchema = mongoose.Schema({
   id: { type: String, required: true },
@@ -9,8 +8,8 @@ const contactSchema = mongoose.Schema({
   description: { type: String },
   imageUrl: { type: String },
   group: [{ type: mongoose.Schema.Types.ObjectId, ref: "Contact" }],
-  // sender: { type: mongoose.Schema.Types.ObjectId, ref: "Contact" },
 });
+
 module.exports = mongoose.model("Contact", contactSchema);
 
 // Frontend model

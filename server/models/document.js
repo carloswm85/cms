@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
-/* const unusedLinkUseForReferenceToFile = require("../../src/app/documents/document.model"); */
 
 const documentSchema = mongoose.Schema({
   id: { type: String, required: true },
   name: { type: String },
-  description: { type: String, required: true },
+  description: { type: String },
   url: { type: String, required: true },
   children: [{ type: mongoose.Schema.Types.ObjectId, ref: "Document" }],
 });
