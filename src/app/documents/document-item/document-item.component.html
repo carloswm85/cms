@@ -4,5 +4,12 @@
   class="list-group-item clearfix documentDiv"
 >
   <!-- Display document name here -->
-  {{ document.name }}
+   <b>
+     {{ document.name | shorten:25 }}
+   </b>
+   <br>
+   <div class="text-center ">~</div>
+   <p class="text-center">
+     - ID: {{ document.id }} -
+   </p>
 </a>

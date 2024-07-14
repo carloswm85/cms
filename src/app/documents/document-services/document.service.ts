@@ -1,8 +1,11 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Document } from '../document.model';
-import { MOCKDOCUMENTS } from '../document-data/MOCKDOCUMENTS';
 import { Subject } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -11,43 +14,127 @@ export class DocumentService {
   // documentChangedEvent = new EventEmitter<Document[]>();
   documentSelectedEvent = new EventEmitter<Document>();
   documentListChangedEvent = new Subject<Document[]>();
+  isLocalhost: boolean = true;
+  documentsUrl: string = this.isLocalhost
+    ? 'http://localhost:3000/documents/'
+    : 'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/documents.json';
 
   private documents: Document[] = [];
   private maxDocumentId: number;
 
-  constructor(private http: HttpClient) {
-    this.documents = MOCKDOCUMENTS;
-    this.maxDocumentId = this.getMaxId();
-  }
+  constructor(private http: HttpClient) {}
 
+  // =================================================================== GET ONE
   getDocument(id: string) {
     const document = this.documents.find((doc) => doc.id == id);
-    console.log(document);
+    console.log('>> APP:DOCUMENT:SERVICE:GETDOCUMENT: ', document);
     if (document == null) return null;
     return document;
   }
 
-  // The method is aborted if no document was passed.
-  deleteDocument(document: Document) {
-    if (document == null || document == undefined) {
+  // =================================================================== GET ALL
+  getDocuments() {
+    this.http
+      .get<{ message: string; documents: Document[] }>(this.documentsUrl)
+      // Call the Observable class’s subscribe() method
+      .subscribe({
+        next: (response) => {
+          console.log(
+            '>> APP:DOCUMENT:SERVICE:GETDOCUMENT_S: ',
+            response.documents
+          );
+          this.documents = response.documents;
+          this.sortAndSend();
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error(error);
+        },
+      });
+  }
+
+  // ====================================================================== POST
+  addDocument(newDocument: Document) {
+    if (!newDocument) {
       return;
     }
-    const pos = this.documents.indexOf(document);
 
-    // If the index is negative, the document was not found and the method is aborted.
+    // make sure id of the new Document is empty
+    newDocument.id = '';
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // add to database
+    this.http
+      .post<{ message: string; document: Document }>(
+        this.documentsUrl,
+        newDocument,
+        { headers: headers }
+      )
+      .subscribe((responseData) => {
+        // add new document to documents
+        this.documents.push(responseData.document);
+        this.sortAndSend();
+      });
+  }
+
+  // ======================================================================= PUT
+  updateDocument(originalDocument: Document, newDocument: Document) {
+    if (!originalDocument || !newDocument) {
+      return;
+    }
+
+    const pos = this.documents.findIndex((d) => d.id === originalDocument.id);
+
     if (pos < 0) {
       return;
     }
-    this.documents.splice(pos, 1);
-    // We then emit the documentChangedEvent to signal that a change
-    // has been made to the document list and pass it a copy of the document
-    // list stored in the DocumentService class.
-    /* const documentListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentListClone); */
-    this.storeDocuments();
+
+    // set the id of the new Document to the id of the old Document
+    newDocument.id = originalDocument.id;
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // update database
+    this.http
+      .put(this.documentsUrl + originalDocument.id, newDocument, {
+        headers: headers,
+      })
+      .subscribe((response: Response) => {
+        console.log(
+          '>> APP:SERVICE:DOCUMENT:UPDATE:PUT:SUBSCRIBE:response ',
+          response
+        );
+        this.documents[pos] = newDocument;
+        this.sortAndSend();
+      });
   }
 
-  ///
+  // ==================================================================== DELETE
+  deleteDocument(document: Document) {
+    if (!document) {
+      return;
+    }
+
+    const pos = this.documents.findIndex((d) => d.id === document.id);
+
+    if (pos < 0) {
+      return;
+    }
+
+    // delete from database
+    this.http
+      .delete(this.documentsUrl + document.id)
+      .subscribe((response: Response) => {
+        console.log(
+          '>> APP:SERVICE:DOCUMENT:DELETE:SUBSCRIBE:response ',
+          response
+        );
+        this.documents.splice(pos, 1);
+        this.sortAndSend();
+      });
+  }
+
+  // =========================================================== PRIVATE METHODS
   getMaxId(): number {
     if (!this.documents || this.documents.length === 0) {
       return -1; // Or any appropriate value indicating no documents are present
@@ -65,111 +152,16 @@ export class DocumentService {
     return maxId;
   }
 
-  addDocument(newDocument: Document) {
-    if (newDocument == null || newDocument == undefined) {
-      return;
-    }
-
-    this.maxDocumentId++;
-    newDocument.id = this.maxDocumentId.toString();
-    this.documents.push(newDocument);
-
-    /* const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone); */
-    this.storeDocuments();
-  }
-
-  updateDocument(originalDocument: Document, newDocument: Document) {
-    if (
-      originalDocument == null ||
-      originalDocument == undefined ||
-      newDocument == null ||
-      newDocument == undefined
-    ) {
-      return;
-    }
-
-    const pos = this.documents.indexOf(originalDocument);
-    if (pos < 0) return;
-    newDocument.id = originalDocument.id;
-    this.documents[pos] = newDocument;
-    /* const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone); */
-    this.storeDocuments();
-  }
-
-  /* ================================= HTTP ================================= */
-
-  /**
-   * Call the HTTP service’s get() method to make an HTTP Get request to get the
-   * array of documents from your Firebase database server. It returns an
-   * Observable object because all HTTP requests are asynchronous (i.e. the
-   * response will not be returned immediately). This Observable object waits
-   * and listens for a response to be returned from the server.
-   */
-  getDocuments(fromMemory: boolean = true) {
-    if (fromMemory) {
-      return this.documents.slice() || null;
-    }
-
-    this.http
-      .get<Document[]>(
-        'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/documents.json'
-      )
-      // Call the Observable class’s subscribe() method
-      .subscribe(
-        // success method
-        (documents: Document[]) => {
-          this.documents = documents;
-          this.maxDocumentId = this.getMaxId();
-          this.documents.sort((a, b) => +a.id - +b.id); // Sort the list of documents by id
-          const clonedList = this.documents.slice();
-          // Emit the next document list change event
-          this.documentListChangedEvent.next(clonedList);
-        },
-        // error method
-        (error: unknown) => {
-          console.log(error);
-        }
-      );
-  }
-
   /**
    * This method will be called when a Document object is added, updated, or
    * deleted in the document list.
    */
-  storeDocuments() {
-    const documents = this.getDocuments();
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
+  sortAndSend() {
+    this.documents.sort((a, b) => {
+      if (a < b) return -1;
+      if (a > b) return 1;
+      return 0;
     });
-
-    // The put() method returns an Observable object because HTTP requests are
-    // asynchronous.
-
-    // 01 - Subscription on component approach (this may require a loading
-    // spinner to be included)
-    /* return this.http.put(
-      'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/documents.json', // add `.json`
-      recipes
-    ); */
-
-    // 02 - Subscribe in the service
-    this.http
-      .put(
-        'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/documents.json',
-        documents,
-        { headers: headers }
-      )
-      .subscribe((response) => {
-        console.log('>>> PUT');
-        console.log(response);
-        this.documents = documents;
-        this.maxDocumentId = this.getMaxId();
-        this.documents.sort((a, b) => +a.id - +b.id); // Sort the list of documents by id
-        const clonedList = this.documents.slice();
-        this.documentListChangedEvent.next(clonedList); // Emit the next document list change event
-      });
+    this.documentListChangedEvent.next(this.documents.slice());
   }
 }

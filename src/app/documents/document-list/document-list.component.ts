@@ -15,12 +15,6 @@ import { Subscription } from 'rxjs';
   styleUrl: './document-list.component.css',
 })
 export class DocumentListComponent implements OnInit, OnDestroy {
-  // documents: Document[] = [
-  //   new Document('id0', 'name0', 'description0', 'url0', null),
-  //   new Document('id1', 'name1', 'description1', 'url1', null),
-  //   new Document('id2', 'name2', 'description2', 'url2', null),
-  //   new Document('id3', 'name3', 'description3', 'url3', null),
-  // ];
   @Output() selectedDocumentEvent = new EventEmitter<void>();
   documents: Document[] = [];
   subscription: Subscription;
@@ -28,7 +22,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   constructor(private documentService: DocumentService) {}
 
   ngOnInit(): void {
-    this.documents = this.documentService.getDocuments();
+    this.documentService.getDocuments();
     this.subscription = this.documentService.documentListChangedEvent.subscribe(
       (documentsList: Document[]) => {
         this.documents = documentsList;
@@ -39,10 +33,4 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
-  // OLD
-  /* onSelectedDocument(document: Document) {
-    // this.selectedDocumentEvent.emit(document);
-    this.documentService.documentSelectedEvent.emit(document);
-  } */
 }
