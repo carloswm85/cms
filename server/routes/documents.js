@@ -40,12 +40,14 @@ router.post("/", (req, res, next) => {
     description: req.body.description,
     url: req.body.url,
   });
+  console.log(">> SERVER:DOCUMENT:POST:document: ", document);
 
   // Save the document to the database
   document
     .save()
     .then((createdDocument) => {
       // Respond with status 201 (Created) and send the created document as JSON
+      console.log(">> SERVER:DOCUMENTS:POST:201");
       res.status(201).json({
         message: "Document added successfully",
         document: createdDocument,
@@ -53,6 +55,7 @@ router.post("/", (req, res, next) => {
     })
     .catch((error) => {
       // Handle errors and respond with status 500 (Internal Server Error)
+      console.log(">> SERVER:DOCUMENTS:POST:500 ", error);
       res.status(500).json({
         message: "An error occurred",
         error: error,
@@ -66,10 +69,12 @@ router.put("/:id", (req, res, next) => {
   Document.findOne({ id: req.params.id }) // Find the document by ID
     .then((document) => {
       if (!document) {
+        console.log(">> SERVER:DOCUMENTS:PUT:404 ", document);
         return res.status(404).json({
           message: "Document not found.",
         });
       }
+      console.log(">> SERVER:DOCUMENTS:PUT:document: ", document);
 
       // Update the document fields with the data from the request body
       document.name = req.body.name;
@@ -80,11 +85,14 @@ router.put("/:id", (req, res, next) => {
       Document.updateOne({ id: req.params.id }, document)
         .then((result) => {
           // Respond with status 204 (No Content) indicating successful update
+          console.log(">> SERVER:DOCUMENT:UPDATEONE:204:document: ", document);
+
           res.status(204).json({
             message: "Document updated successfully",
           });
         })
         .catch((error) => {
+          console.log(">> SERVER:DOCUMENT:UPDATEONE:500:error: ", error);
           // Handle errors and respond with status 500 (Internal Server Error)
           res.status(500).json({
             message: "An error occurred",
@@ -94,6 +102,7 @@ router.put("/:id", (req, res, next) => {
     })
     .catch((error) => {
       // Handle errors when the document is not found and respond with status 500 (Internal Server Error)
+      console.log(">> SERVER:DOCUMENT:UPDATEONE:500:error: ", error);
       res.status(500).json({
         message: "Document not found.",
         error: { document: "Document not found", error: error },
@@ -104,9 +113,15 @@ router.put("/:id", (req, res, next) => {
 // ====================================================================== DELETE
 // Define a DELETE endpoint to remove a document by ID
 router.delete("/:id", (req, res, next) => {
+  console.log(">> SERVER:DOCUMENT:DELETE:document:id ", req.params.id);
+  //
   Document.findOne({ id: req.params.id }) // Find the document by ID
     .then((document) => {
+      //
+      console.log(">> SERVER:DOCUMENT:DELETE:document: ", document);
       if (!document) {
+        //
+        console.log(">> SERVER:DOCUMENT:DELETE:404:document: ", document);
         return res.status(404).json({
           message: "Document not found.",
         });
@@ -116,12 +131,14 @@ router.delete("/:id", (req, res, next) => {
       Document.deleteOne({ id: req.params.id })
         .then((result) => {
           // Respond with status 204 (No Content) indicating successful deletion
+          console.log(">> SERVER:DOCUMENT:DELETE:204:document ", document, result);
           res.status(204).json({
             message: "Document deleted successfully",
           });
         })
         .catch((error) => {
           // Handle errors and respond with status 500 (Internal Server Error)
+          console.log(">> SERVER:DOCUMENT:DELETE:500:document: ", document);
           res.status(500).json({
             message: "An error occurred",
             error: error,
@@ -130,6 +147,7 @@ router.delete("/:id", (req, res, next) => {
     })
     .catch((error) => {
       // Handle errors when the document is not found and respond with status 500 (Internal Server Error)
+      console.log(">> SERVER:DOCUMENT:DELETE:500:document: ", document);
       res.status(500).json({
         message: "Document not found.",
         error: { document: "Document not found", error: error },
