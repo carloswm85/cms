@@ -15,7 +15,9 @@ export class MessageItemComponent implements OnInit {
   constructor(private contactService: ContactService) {}
 
   ngOnInit(): void {
-    this.contact =
-      this.contactService.getContact(this.message.senderId) || null;
+    console.log('>> APP:MESSAGEITEM:ONINIT:message: ', this.message);
+
+    this.contact = new Contact('123', 'THIS MUST BE FIXED', '', '', '', '', []);
+    // this.contactService.getContact(this.message.senderId) || null;
   }
 }

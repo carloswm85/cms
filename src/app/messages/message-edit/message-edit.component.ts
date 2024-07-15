@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Message } from '../message.model';
 import { MessageService } from '../message-services/message.service';
+import { Contact } from '../../contacts/contact.model';
 
 @Component({
   selector: 'app-message-edit',
@@ -8,22 +9,30 @@ import { MessageService } from '../message-services/message.service';
   styleUrl: './message-edit.component.css',
 })
 export class MessageEditComponent {
-  currentSender: string = 'Carlos Mercado';
-  senderID: string = '99';
-  //
   @ViewChild('subjectText', { static: false }) subjectRef: ElementRef;
   @ViewChild('msgText', { static: false }) msgRef: ElementRef;
-  //
-  // @Output() addMessageEvent = new EventEmitter<Message>();
 
-  constructor(private messageService: MessageService) {}
+  senderID: string = '99';
+  currentSender: string = 'Carlos Mercado';
+
+  
+  contact: Contact = {
+    id: '99',
+    name: 'Carlos Mercado',
+    email: 'cm@byui.edu',
+    phone: '222',
+    description: 'This is some description',
+    imageUrl: '../../assets/images/carlos.png',
+    group: null
+  };
+
+  constructor(private messageService: MessageService, ) {}
 
   onSendMessage() {
     const newSubject = this.subjectRef.nativeElement.value;
     const newMsg = this.msgRef.nativeElement.value;
-    const newMessage = new Message('', newSubject, newMsg, this.senderID);
-    // this.addMessageEvent.emit(newMessage);
-    console.log(newMessage);
+    const newMessage = new Message('', newSubject, newMsg, this.contact.id);
+    console.log('>> APP:MESSAGE:EDITCOMPONENT:onSendMessage:newMessage',newMessage);
     this.messageService.addMessage(newMessage);
   }
 
