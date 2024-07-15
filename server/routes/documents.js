@@ -40,7 +40,7 @@ router.post("/", (req, res, next) => {
     description: req.body.description,
     url: req.body.url,
   });
-  console.log(">> SERVER:DOCUMENT:POST:document: ", document);
+  console.log(">> SERVER:DOCUMENTS:POST:document: ", document);
 
   // Save the document to the database
   document
