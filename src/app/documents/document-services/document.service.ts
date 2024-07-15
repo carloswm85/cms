@@ -13,7 +13,7 @@ import {
 export class DocumentService {
   // documentChangedEvent = new EventEmitter<Document[]>();
   documentSelectedEvent = new EventEmitter<Document>();
-  documentListChangedEvent = new Subject<Document[]>();
+  documentsChangedEvent = new Subject<Document[]>();
   isLocalhost: boolean = true;
   documentsUrl: string = this.isLocalhost
     ? 'http://localhost:3000/documents/'
@@ -40,7 +40,7 @@ export class DocumentService {
       .subscribe({
         next: (response) => {
           console.log(
-            '>> APP:DOCUMENT:SERVICE:GETDOCUMENT_S: ',
+            '>> APP:DOCUMENT:SERVICE:GETDOCUMENTS: ',
             response.documents
           );
           this.documents = response.documents;
@@ -162,6 +162,9 @@ export class DocumentService {
       if (a > b) return 1;
       return 0;
     });
-    this.documentListChangedEvent.next(this.documents.slice());
+
+    const documentsCloned = this.documents.slice();
+    console.log('>> APP:SERVICE:DOCUMENTS:documents:', documentsCloned);
+    this.documentsChangedEvent.next(documentsCloned);
   }
 }

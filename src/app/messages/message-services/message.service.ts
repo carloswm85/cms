@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Message } from '../message.model';
 import { MOCKMESSAGES } from '../message-data/MOCKMESSAGES';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -13,102 +17,80 @@ export class MessageService {
   messagesChangedEvent = new Subject<Message[]>();
   maxMessageId: number;
 
+  //
+  isLocalhost: boolean = true;
+  messagesUrl: string = this.isLocalhost
+    ? 'http://localhost:3000/messages/'
+    : 'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/documents.json';
+
   constructor(private http: HttpClient) {
     this.messages = MOCKMESSAGES;
   }
 
+  // =================================================================== GET ONE
   getMessage(id: string) {
-    const message = this.messages[id];
+    const message = this.messages.find((mess) => mess.id == id);
+    console.log('>> APP:MESSAGE:SERVICE:GETMESSAGE: ', message);
     if (message == null) return null;
     return message;
   }
 
-  addMessage(newMessage: Message) {
-    this.messages.unshift(newMessage);
-    const clonedList = this.messages.slice();
-    this.messagesChangedEvent.next(clonedList);
-    this.storeMessages();
-  }
-
-  /* ================================= HTTP ================================= */
-
-  /**
-   *
-   * @param fromMemory
-   * @returns
-   */
-  getMessages(fromMemory: boolean = true): Message[] {
-    if (fromMemory) {
-      return this.messages.slice() || null;
-    }
-
+  // =================================================================== GET ALL
+  getMessages() {
     this.http
-      .get<Message[]>(
-        'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/messages.json'
-      )
-      // Call the Observable class’s subscribe() method
-      .subscribe(
-        // success method
-        (messages: Message[]) => {
-          this.messages = messages;
-          this.maxMessageId = this.getMaxId();
-          this.messages.sort((a, b) => +a.id - +b.id); // Sort the list of messages by id
-          const clonedList = this.messages.slice();
-          // Emit the next message list change event
-          this.messagesChangedEvent.next(clonedList);
+      .get<{ message: string; messages: Message[] }>(this.messagesUrl)
+      .subscribe({
+        next: (response) => {
+          console.log(
+            '>> APP:MESSAGES:SERVICE:GETMESSAGES: ',
+            response.messages
+          );
+          this.messages = response.messages;
+          this.sortAndSend();
         },
-        // error method
-        (error: unknown) => {
-          console.log(error);
-        }
-      );
-  }
-
-  /**
-   * This method will be called when a Message object is added, updated, or
-   * deleted in the message list.
-   */
-  storeMessages() {
-    const messages = this.getMessages();
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-
-    // The put() method returns an Observable object because HTTP requests are
-    // asynchronous.
-
-    // 01 - Subscription on component approach (this may require a loading
-    // spinner to be included)
-    /* return this.http.put(
-      'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/messages.json', // add `.json`
-      recipes
-    ); */
-
-    // 02 - Subscribe in the service
-    this.http
-      .put(
-        'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/messages.json',
-        messages,
-        { headers: headers }
-      )
-      .subscribe((response) => {
-        console.log('>>> PUT');
-        console.log(response);
-        this.messages = messages;
-        this.maxMessageId = this.getMaxId();
-        this.messages.sort((a, b) => +a.id - +b.id); // Sort the list of messages by id
-        const clonedList = this.messages.slice();
-        this.messagesChangedEvent.next(clonedList); // Emit the next message list change event
+        error: (error: HttpErrorResponse) => {
+          console.error(error);
+        },
       });
   }
 
-  /* ================================ PRIVATE =============================== */
+  // ====================================================================== POST
+  addMessage(newMessage: Message) {
+    if (!newMessage) {
+      return;
+    }
+    console.log('>> APP:SERVICE:MESSAGE:POST:newMessage', newMessage);
 
-  /**
-   *
-   * @returns
-   */
+    // make sure id of the new Message is empty
+    newMessage.id = '';
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // add to database
+    this.http
+      .post<{ message: string; messageItem: Message }>(
+        this.messagesUrl,
+        newMessage,
+        { headers: headers }
+      )
+      .subscribe((responseData) => {
+        // add new document to documents
+        console.log(
+          '>> APP:SERVICE:MESSAGE:POST:newMessage',
+          responseData.messageItem
+        );
+        this.messages.push(responseData.messageItem);
+        this.sortAndSend();
+      });
+  }
+
+  // ======================================================================= PUT
+  /* NOT REQUIRED */
+
+  // ==================================================================== DELETE
+  /* NOT REQUIRED */
+
+  // =========================================================== PRIVATE METHODS
   getMaxId(): number {
     if (!this.messages || this.messages.length === 0) {
       return -1; // Or any appropriate value indicating no messages are present
@@ -116,13 +98,29 @@ export class MessageService {
 
     let maxId = -Infinity;
 
-    this.messages.forEach((message) => {
-      const currentId = Number(message.id);
+    this.messages.forEach((mess) => {
+      const currentId = Number(mess.id);
       if (!isNaN(currentId) && currentId > maxId) {
         maxId = currentId;
       }
     });
 
     return maxId;
+  }
+
+  /**
+   * This method will be called when a Document object is added, updated, or
+   * deleted in the document list.
+   */
+  sortAndSend() {
+    this.messages.sort((a, b) => {
+      if (a < b) return -1;
+      if (a > b) return 1;
+      return 0;
+    });
+
+    const messagesCloned = this.messages.slice();
+    console.log('>> APP:SERVICE:MESSAGES:messages:', messagesCloned);
+    this.messagesChangedEvent.next(messagesCloned);
   }
 }
