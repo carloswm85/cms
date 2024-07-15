@@ -15,7 +15,6 @@ export class MessageEditComponent {
   senderID: string = '99';
   currentSender: string = 'Carlos Mercado';
 
-  
   contact: Contact = {
     id: '99',
     name: 'Carlos Mercado',
