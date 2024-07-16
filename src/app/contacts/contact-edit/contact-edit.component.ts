@@ -32,6 +32,15 @@ export class ContactEditComponent implements OnInit {
 
       if (this.contactId == undefined || this.contactId == null) {
         this.editMode = false;
+        this.contact = new Contact(
+          '',
+          '',
+          '',
+          '',
+          '',
+          'https://picsum.photos/300',
+          null
+        );
         return;
       }
       this.originalContact = this.contactService.getContact(params['id']);
@@ -52,25 +61,17 @@ export class ContactEditComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    console.log(form.value);
-    const id: string = form.value['id'];
-    const name: string = form.value['name'];
-    const email: string = form.value['email'];
-    const phone: string = form.value['phone'];
-    const description: string = form.value['description'];
-    const imageUrl: string = form.value['imageUrl'];
-    const group: Contact[] = form.value['group'];
-
     const newContact = new Contact(
-      id,
-      name,
-      email,
-      phone,
-      description,
-      imageUrl,
-      group
+      form.value['id'],
+      form.value['name'],
+      form.value['email'],
+      form.value['phone'],
+      form.value['description'],
+      form.value['imageUrl'],
+      form.value['group']
     );
-    console.log(newContact);
+
+    console.log('>> APP:CONTACTEDIT:onSubmit:newContact: ', newContact);
     if (this.editMode == true) {
       this.contactService.updateContact(this.originalContact, newContact);
     } else {

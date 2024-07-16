@@ -1,82 +1,137 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Contact } from './contact.model';
-import { MOCKCONTACTS } from './MOCKCONTACTS';
 import { Subject } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContactService {
-  contacts: Contact[] = [];
+  // ================================================================ PROPERTIES
   contactSelectedEvent = new EventEmitter<Contact>();
-  // contactsChangedEvent = new EventEmitter<Contact[]>();
-  contactListChangedEvent = new Subject<Contact[]>();
-  private maxContactId: number;
+  contactsChangedEvent = new Subject<Contact[]>();
 
-  constructor(private http: HttpClient) {
-    this.contacts = MOCKCONTACTS;
-  }
+  private contacts: Contact[] = [];
 
+  private isLocalhost: boolean = true;
+  private contactsUrl: string = this.isLocalhost
+    ? 'http://localhost:3000/contacts/'
+    : 'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/contacts.json';
+
+  // =============================================================== CONSTRUCTOR
+  constructor(private http: HttpClient) {}
+
+  // =================================================================== GET ONE
   getContact(id: string): Contact {
-    return this.contacts.find((item) => item.id == id) || null;
+    const contact = this.contacts.find((contact) => contact.id == id);
+    console.log('>> APP:CONTACT:SERVICE:GETCONTACT: ', contact);
+    if (contact == null) return null;
+    return contact;
   }
 
+  // =================================================================== GET ALL
+  getContacts() {
+    this.http
+      .get<{ message: string; contacts: Contact[] }>(this.contactsUrl)
+      // Call the Observable class’s subscribe() method
+      .subscribe({
+        next: (response) => {
+          console.log(
+            '>> APP:CONTACT:SERVICE:GETCONTACTS: ',
+            response.contacts
+          );
+          this.contacts = response.contacts;
+          this.sortAndSend();
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error(error);
+        },
+      });
+  }
+
+  // ====================================================================== POST
+  addContact(newContact: Contact) {
+    if (!newContact) {
+      return;
+    }
+
+    // make sure id of the new Contact is empty
+    newContact.id = '';
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // add to database
+    this.http
+      .post<{ message: string; contact: Contact }>(
+        this.contactsUrl,
+        newContact,
+        { headers: headers }
+      )
+      .subscribe((responseData) => {
+        // add new contact to contacts
+        this.contacts.push(responseData.contact);
+        this.sortAndSend();
+      });
+  }
+
+  // ======================================================================= PUT
+  updateContact(originalContact: Contact, newContact: Contact) {
+    if (!originalContact || !newContact) {
+      return;
+    }
+
+    const pos = this.contacts.findIndex((d) => d.id === originalContact.id);
+
+    if (pos < 0) {
+      return;
+    }
+
+    // set the id of the new Contact to the id of the old Contact
+    newContact.id = originalContact.id;
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // update database
+    this.http
+      .put(this.contactsUrl + originalContact.id, newContact, {
+        headers: headers,
+      })
+      .subscribe((response: Response) => {
+        console.log(
+          '>> APP:SERVICE:CONTACT:UPDATE:PUT:SUBSCRIBE:response ',
+          response
+        );
+        this.contacts[pos] = newContact;
+        this.sortAndSend();
+      });
+  }
+
+  // ==================================================================== DELETE
   deleteContact(contact: Contact) {
     if (!contact) {
       return;
     }
-    console.log(contact);
-    const pos: number = this.contacts.indexOf(contact);
 
-    // If the index is negative, the contact was not found and the method is aborted.
+    const pos = this.contacts.findIndex((d) => d.id === contact.id);
+
     if (pos < 0) {
       return;
     }
-    this.contacts.splice(pos, 1);
 
-    /* Unused section */
-    // We then emit the contactChangedEvent to signal that a change
-    // has been made to the contact list and pass it a copy of the contact
-    // list stored in the ContactService class.
-    /* const contactsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactsListClone); */
-    this.storeContacts();
+    // delete from database
+    this.http
+      .delete(this.contactsUrl + contact.id)
+      .subscribe((response: Response) => {
+        console.log(
+          '>> APP:SERVICE:CONTACT:DELETE:SUBSCRIBE:response ',
+          response
+        );
+        this.contacts.splice(pos, 1);
+        this.sortAndSend();
+      });
   }
 
-  addContact(newContact: Contact) {
-    if (newContact == null || newContact == undefined) {
-      return;
-    }
-
-    this.maxContactId++;
-    newContact.id = this.maxContactId.toString();
-    this.contacts.push(newContact);
-
-    /* const contactsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactsListClone); */
-    this.storeContacts();
-  }
-
-  updateContact(originalContact: Contact, newContact: Contact) {
-    if (
-      originalContact == null ||
-      originalContact == undefined ||
-      newContact == null ||
-      newContact == undefined
-    ) {
-      return;
-    }
-
-    const pos = this.contacts.indexOf(originalContact);
-    if (pos < 0) return;
-    newContact.id = originalContact.id;
-    this.contacts[pos] = newContact;
-    /* const contactsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactsListClone); */
-    this.storeContacts();
-  }
-
+  // =========================================================== PRIVATE METHODS
   getMaxId(): number {
     if (!this.contacts || this.contacts.length === 0) {
       return -1; // Or any appropriate value indicating no contacts are present
@@ -94,76 +149,15 @@ export class ContactService {
     return maxId;
   }
 
-  /* ================================= HTTP ================================= */
-
-  /**
-   *
-   * @param fromMemory
-   * @returns
-   */
-  getContacts(fromMemory: boolean = true): Contact[] {
-    if (fromMemory) {
-      return this.contacts.slice() || null;
-    }
-
-    this.http
-      .get<Contact[]>(
-        'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/contacts.json'
-      )
-      // Call the Observable class’s subscribe() method
-      .subscribe(
-        // success method
-        (contacts: Contact[]) => {
-          this.contacts = contacts;
-          this.maxContactId = this.getMaxId();
-          this.contacts.sort((a, b) => +a.id - +b.id); // Sort the list of contacts by id
-          const clonedList = this.contacts.slice();
-          // Emit the next contact list change event
-          this.contactListChangedEvent.next(clonedList);
-        },
-        // error method
-        (error: unknown) => {
-          console.log(error);
-        }
-      );
-  }
-
-  /**
-   * This method will be called when a Contact object is added, updated, or
-   * deleted in the contact list.
-   */
-  storeContacts() {
-    const contacts = this.getContacts();
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
+  sortAndSend() {
+    this.contacts.sort((a, b) => {
+      if (a < b) return -1;
+      if (a > b) return 1;
+      return 0;
     });
 
-    // The put() method returns an Observable object because HTTP requests are
-    // asynchronous.
-
-    // 01 - Subscription on component approach (this may require a loading
-    // spinner to be included)
-    /* return this.http.put(
-      'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/contacts.json', // add `.json`
-      recipes
-    ); */
-
-    // 02 - Subscribe in the service
-    this.http
-      .put(
-        'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/contacts.json',
-        contacts,
-        { headers: headers }
-      )
-      .subscribe((response) => {
-        console.log('>>> PUT');
-        console.log(response);
-        this.contacts = contacts;
-        this.maxContactId = this.getMaxId();
-        this.contacts.sort((a, b) => +a.id - +b.id); // Sort the list of contacts by id
-        const clonedList = this.contacts.slice();
-        this.contactListChangedEvent.next(clonedList); // Emit the next contact list change event
-      });
+    const contactsCloned = this.contacts.slice().reverse();
+    console.log('>> APP:SERVICE:CONTACTS:contacts:', contactsCloned);
+    this.contactsChangedEvent.next(contactsCloned);
   }
 }

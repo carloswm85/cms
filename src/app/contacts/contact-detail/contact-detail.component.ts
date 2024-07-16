@@ -9,18 +9,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
   styleUrl: './contact-detail.component.css',
 })
 export class ContactDetailComponent {
-  /* @Input() contact: Contact; */
   contact: Contact;
   id: string;
-  /* contact: Contact = {
-    id: '1',
-    name: 'R. Kent Jackson',
-    email: 'jacksonk@byui.edu',
-    phone: '208-496-3771',
-    description: 'This is a description.',
-    imageUrl: '../../assets/images/jacksonk.jpg',
-    group: null,
-  }; */
 
   constructor(
     private contactService: ContactService,
@@ -36,7 +26,7 @@ export class ContactDetailComponent {
   onDelete() {
     if (this.contact) {
       this.contactService.deleteContact(this.contact);
-      void this.router.navigate(['/contacts']);
+      this.router.navigate(['/contacts']);
     }
   }
 }

@@ -9,36 +9,15 @@ import { Subscription } from 'rxjs';
   styleUrl: './contact-list.component.css',
 })
 export class ContactListComponent implements OnInit, OnDestroy {
-  /* @Output() selectedContactEvent = new EventEmitter<Contact>(); */
-  /* contacts: Contact[] = [
-    {
-      id: '1',
-      name: 'R. Kent Jackson',
-      email: 'jacksonk@byui.edu',
-      phone: '208-496-3771',
-      description: 'This is R. Kent Jackson description',
-      imageUrl: '../../assets/images/jacksonk.jpg',
-      group: null,
-    },
-    {
-      id: '2',
-      name: 'Rex Barzee',
-      email: 'barzeer@byui.edu',
-      phone: '208-496-3768',
-      description: 'This is Rex Barzee description',
-      imageUrl: '../../assets/images/barzeer.jpg',
-      group: null,
-    },
-  ]; */
-  contacts: Contact[] = [];
+    contacts: Contact[] = [];
   subscription: Subscription;
   term: string;
 
   constructor(private contactService: ContactService) {}
 
   ngOnInit(): void {
-    this.contacts = this.contactService.getContacts();
-    this.subscription = this.contactService.contactListChangedEvent.subscribe(
+    this.contactService.getContacts();
+    this.subscription = this.contactService.contactsChangedEvent.subscribe(
       (contacts: Contact[]) => {
         this.contacts = contacts;
       }
@@ -48,13 +27,6 @@ export class ContactListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
-  // OLD IMPLEMENTATION
-  /* onContactSelected(contact: Contact) {
-    // this.selectedContactEvent.emit(contact);
-    console.log(contact);
-    this.contactService.contactSelectedEvent.emit(contact);
-  } */
 
   search(value: string) {
     console.log(`Searched contact: ${value}`)
