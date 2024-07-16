@@ -32,7 +32,7 @@
   },
   {
     "_id": ObjectId("58c767386f1d58ebc37af1ec"),
-    "id": "5",
+    "id": "4",
     "name": "Kory Godfrey",
     "email": "godfreyko@byui.edu",
     "phone": "208-496-3770",
@@ -42,7 +42,7 @@
   },
   {
     "_id": ObjectId("58c767386f1d58ebc37af1ed"),
-    "id": "7",
+    "id": "5",
     "name": "R. Kent Jackson",
     "email": "jacksonk@byui.edu",
     "phone": "208-496-3771",
@@ -52,7 +52,7 @@
   },
   {
     "_id": ObjectId("58c767386f1d58ebc37af1ee"),
-    "id": "8",
+    "id": "6",
     "name": "Craig Lindstrom",
     "email": "lindstromc@byui.edu",
     "phone": "208-496-3769",
@@ -62,7 +62,7 @@
   },
   {
     "_id": ObjectId("58c767386f1d58ebc37af1ef"),
-    "id": "9",
+    "id": "7",
     "name": "Michael McLaughlin",
     "email": "mclaughlinm@byui.edu",
     "phone": "208-496-3772",
@@ -72,7 +72,7 @@
   },
   {
     "_id": ObjectId("58c767386f1d58ebc37af1f0"),
-    "id": "11",
+    "id": "8",
     "name": "Brent Morring",
     "email": "morringb@byui.edu",
     "phone": "208-496-3778",
@@ -82,7 +82,7 @@
   },
   {
     "_id": ObjectId("58c767386f1d58ebc37af1f1"),
-    "id": "12",
+    "id": "9",
     "name": "Mark Olaveson",
     "email": "olavesonm@byui.edu",
     "phone": "208-496-3773",
@@ -92,7 +92,7 @@
   },
   {
     "_id": ObjectId("58c767386f1d58ebc37af1f2"),
-    "id": "13",
+    "id": "10",
     "name": "Steven Rigby",
     "email": "rigbys@byui.edu",
     "phone": "208-496-3774",
@@ -102,7 +102,7 @@
   },
   {
     "_id": ObjectId("58c767386f1d58ebc37af1f3"),
-    "id": "15",
+    "id": "11",
     "name": "Blaine Robertson",
     "email": "robertsonb@byui.edu",
     "phone": "208-496-3775",
@@ -112,7 +112,7 @@
   },
   {
     "_id": ObjectId("58c767386f1d58ebc37af1f4"),
-    "id": "16",
+    "id": "12",
     "name": "Randy Somsen",
     "email": "somsenr@byui.edu",
     "phone": "208-496-3776",
@@ -122,7 +122,7 @@
   },
   {
     "_id": ObjectId("58c767386f1d58ebc37af1f5"),
-    "id": "17",
+    "id": "13",
     "name": "Shane Thompson",
     "email": "thompsonda@byui.edu",
     "phone": "208-496-3776",
@@ -132,7 +132,7 @@
   },
   {
     "_id": ObjectId("58c8cbf2ABC5414d33ea8beb"),
-    "id": "99",
+    "id": "14",
     "name": "Carlos Mercado",
     "email": "cm@byui.edu",
     "phone": "222",
@@ -142,12 +142,12 @@
   },
   {
     "_id": ObjectId("58c8cbf2ead5414d33ea8beb"),
-    "id": "104",
-    "name": "Programming team",
+    "id": "50",
+    "name": "Programming Team",
     "email": null,
     "phone": null,
     "description": "This is some description",
-    "imageUrl": "../../../assets/images/team-logos/network-w.png",
+    "imageUrl": "../../../assets/images/team-logos/binary-code-w.png",
     "group": [
       ObjectId("58c767386f1d58ebc37af1e9"),
       ObjectId("58c767386f1d58ebc37af1eb"),
@@ -158,8 +158,8 @@
   },
   {
     "_id": ObjectId("58cac74b4690c438e0976b09"),
-    "id": "105",
-    "name": "Database team",
+    "id": "51",
+    "name": "Database Team",
     "email": null,
     "phone": null,
     "description": "This is some description",
@@ -173,8 +173,8 @@
   },
   {
     "_id": ObjectId("58cac77b4690c438e0976b0a"),
-    "id": "106",
-    "name": "Network/OS team",
+    "id": "52",
+    "name": "Network/OS Team",
     "email": null,
     "phone": null,
     "description": "This is some description",
@@ -187,8 +187,9 @@
     "__v": 0
   },
   {
-    "id": "6",
-    "name": "Software Development team",
+     "_id": ObjectId("6695bd85ee78d0d4fde8e3f8"),
+    "id": "53",
+    "name": "Software Development Team",
     "email": null,
     "phone": null,
     "description": null,
@@ -202,8 +203,9 @@
     "__v": 0
   },
   {
-    "id": "10",
-    "name": "Web Development team",
+     "_id": ObjectId("6695bd85ee78d0d4fde8e3f9"),
+    "id": "54",
+    "name": "Web Development Team",
     "email": null,
     "phone": null,
     "description": null,
@@ -216,22 +218,9 @@
     "__v": 0
   },
   {
-    "id": "14",
-    "name": "Database team",
-    "email": null,
-    "phone": null,
-    "description": null,
-    "imageUrl": "../../../assets/images/team-logos/database-w.png",
-    "group": [
-      ObjectId("58c767386f1d58ebc37af1ed"),
-      ObjectId("58c767386f1d58ebc37af1ef"),
-      ObjectId("58c767386f1d58ebc37af1f0")
-    ],
-    "__v": 0
-  },
-  {
-    "id": "18",
-    "name": "Computer Security team",
+     "_id": ObjectId("6695bd85ee78d0d4fde8e3fb"),
+    "id": "55",
+    "name": "Computer Security Team",
     "email": null,
     "phone": null,
     "description": null,
