@@ -12,11 +12,8 @@ export class MessageEditComponent {
   @ViewChild('subjectText', { static: false }) subjectRef: ElementRef;
   @ViewChild('msgText', { static: false }) msgRef: ElementRef;
 
-  senderID: string = '99';
-  currentSender: string = 'Carlos Mercado';
-
   contact: Contact = {
-    id: '99',
+    id: '14',
     name: 'Carlos Mercado',
     email: 'cm@byui.edu',
     phone: '222',
@@ -33,6 +30,7 @@ export class MessageEditComponent {
     const newMessage = new Message('', newSubject, newMsg, this.contact.id);
     console.log('>> APP:MESSAGE:EDITCOMPONENT:onSendMessage:newMessage',newMessage);
     this.messageService.addMessage(newMessage);
+    this.onClear();
   }
 
   onClear() {

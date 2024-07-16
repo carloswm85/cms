@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Message } from '../message.model';
-import { MOCKMESSAGES } from '../message-data/MOCKMESSAGES';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -13,7 +12,6 @@ import { Subject } from 'rxjs';
 })
 export class MessageService {
   private messages: Message[] = [];
-  /* messagesChangedEvent = new EventEmitter<Message[]>(); */
   messagesChangedEvent = new Subject<Message[]>();
   maxMessageId: number;
 
@@ -23,9 +21,7 @@ export class MessageService {
     ? 'http://localhost:3000/messages/'
     : 'https://ng-complete-guide-2024-udemy-default-rtdb.firebaseio.com/documents.json';
 
-  constructor(private http: HttpClient) {
-    this.messages = MOCKMESSAGES;
-  }
+  constructor(private http: HttpClient) {}
 
   // =================================================================== GET ONE
   getMessage(id: string) {
@@ -119,7 +115,7 @@ export class MessageService {
       return 0;
     });
 
-    const messagesCloned = this.messages.slice();
+    const messagesCloned = this.messages.slice().reverse();
     console.log('>> APP:SERVICE:MESSAGES:messages:', messagesCloned);
     this.messagesChangedEvent.next(messagesCloned);
   }
