@@ -147,8 +147,12 @@
     "email": null,
     "phone": null,
     "description": "This is some description",
-    "imageUrl": null,
-    "group": [ObjectId("58c767386f1d58ebc37af1e9"), ObjectId("58c767386f1d58ebc37af1eb"), ObjectId("58c767386f1d58ebc37af1ed"), ObjectId("58c767386f1d58ebc37af1f1")
+    "imageUrl": "../../../assets/images/team-logos/network-w.png",
+    "group": [
+      ObjectId("58c767386f1d58ebc37af1e9"),
+      ObjectId("58c767386f1d58ebc37af1eb"),
+      ObjectId("58c767386f1d58ebc37af1ed"),
+      ObjectId("58c767386f1d58ebc37af1f1")
     ],
     "__v": 5
   },
@@ -159,20 +163,83 @@
     "email": null,
     "phone": null,
     "description": "This is some description",
-    "imageUrl": null,
-    "group": [ObjectId("58c767386f1d58ebc37af1ed"), ObjectId("58c767386f1d58ebc37af1ef"), ObjectId("58c767386f1d58ebc37af1f0")
+    "imageUrl": "../../../assets/images/team-logos/database-w.png",
+    "group": [
+      ObjectId("58c767386f1d58ebc37af1ed"),
+      ObjectId("58c767386f1d58ebc37af1ef"),
+      ObjectId("58c767386f1d58ebc37af1f0")
     ],
     "__v": 0
   },
   {
     "_id": ObjectId("58cac77b4690c438e0976b0a"),
     "id": "106",
-    "name": "Networking team",
+    "name": "Network/OS team",
     "email": null,
     "phone": null,
     "description": "This is some description",
-    "imageUrl": null,
-    "group": [ObjectId("58c767386f1d58ebc37af1ea"), ObjectId("58c767386f1d58ebc37af1ee"), ObjectId("58c767386f1d58ebc37af1f2")
+    "imageUrl": "../../../assets/images/team-logos/network-w.png",
+    "group": [
+      ObjectId("58c767386f1d58ebc37af1ea"),
+      ObjectId("58c767386f1d58ebc37af1ee"),
+      ObjectId("58c767386f1d58ebc37af1f2")
+    ],
+    "__v": 0
+  },
+  {
+    "id": "6",
+    "name": "Software Development team",
+    "email": null,
+    "phone": null,
+    "description": null,
+    "imageUrl": "../../../assets/images/team-logos/software-w.png",
+    "group": [
+      ObjectId("58c767386f1d58ebc37af1e9"),
+      ObjectId("58c767386f1d58ebc37af1eb"),
+      ObjectId("58c767386f1d58ebc37af1ed"),
+      ObjectId("58c767386f1d58ebc37af1f1")
+    ],
+    "__v": 0
+  },
+  {
+    "id": "10",
+    "name": "Web Development team",
+    "email": null,
+    "phone": null,
+    "description": null,
+    "imageUrl": "../../../assets/images/team-logos/web-w.png",
+    "group": [
+      ObjectId("58c767386f1d58ebc37af1f3"),
+      ObjectId("58c767386f1d58ebc37af1f4"),
+      ObjectId("58c767386f1d58ebc37af1f5")
+    ],
+    "__v": 0
+  },
+  {
+    "id": "14",
+    "name": "Database team",
+    "email": null,
+    "phone": null,
+    "description": null,
+    "imageUrl": "../../../assets/images/team-logos/database-w.png",
+    "group": [
+      ObjectId("58c767386f1d58ebc37af1ed"),
+      ObjectId("58c767386f1d58ebc37af1ef"),
+      ObjectId("58c767386f1d58ebc37af1f0")
+    ],
+    "__v": 0
+  },
+  {
+    "id": "18",
+    "name": "Computer Security team",
+    "email": null,
+    "phone": null,
+    "description": null,
+    "imageUrl": "../../../assets/images/team-logos/security-w.png",
+    "group": [
+      ObjectId("58c767386f1d58ebc37af1ec"),
+      ObjectId("58c767386f1d58ebc37af1ee"),
+      ObjectId("58c767386f1d58ebc37af1f2")
     ],
     "__v": 0
   }
