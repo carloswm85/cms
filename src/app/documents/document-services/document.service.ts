@@ -11,9 +11,10 @@ import {
   providedIn: 'root',
 })
 export class DocumentService {
-  // documentChangedEvent = new EventEmitter<Document[]>();
+  // ================================================================ PROPERTIES
   documentSelectedEvent = new EventEmitter<Document>();
   documentsChangedEvent = new Subject<Document[]>();
+
   isLocalhost: boolean = true;
   documentsUrl: string = this.isLocalhost
     ? 'http://localhost:3000/documents/'
@@ -22,6 +23,7 @@ export class DocumentService {
   private documents: Document[] = [];
   private maxDocumentId: number;
 
+  // =============================================================== CONSTRUCTOR
   constructor(private http: HttpClient) {}
 
   // =================================================================== GET ONE

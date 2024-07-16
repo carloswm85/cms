@@ -1,4 +1,4 @@
-<div class="col-sm-6 panel panel-default" xmlns="http://www.w3.org/1999/html">
+<div class="col-sm-8 panel panel-default" xmlns="http://www.w3.org/1999/html">
   <div class="panel-heading">
     <div class="row pad-all">
       <h4 class="title margin-left-right">
@@ -6,8 +6,15 @@
       </h4>
       <h5 class="title margin-left-right">(ID: {{ document.id }})</h5>
       <div class="row pull-right margin-left-right">
-        <a href="#" class="btn btn-primary btn-space-right" (click)="onView()">View ↗</a>
-        <a class="btn btn-info btn-space-right" routerLink="edit">Edit</a>
+        <!-- 01 -->
+        <button class="btn btn-primary btn-space-right" (click)="onView()">
+          View ↗
+        </button>
+        <!-- 02 -->
+        <button class="btn btn-info btn-space-right" routerLink="edit">
+          Edit
+        </button>
+        <!-- 03 -->
         <button class="btn btn-danger" (click)="onDelete()">Delete</button>
       </div>
     </div>

@@ -32,6 +32,7 @@ export class DocumentDetailComponent implements OnInit {
   }
 
   onView() {
+    this.router.navigate(['/documents']);
     if (this.document.url) {
       this.nativeWindow.open(this.document.url);
     }
