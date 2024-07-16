@@ -39,7 +39,7 @@ router.post("/", (req, res, next) => {
   Contact.findOne({ id: req.body.senderId }).then((contact) => {
     //
     const existingContact = new Contact({
-      id: contact.id,
+      id: contact.senderId,
       name: contact.name,
       email: contact.email,
       phone: contact.phone,
@@ -62,7 +62,7 @@ router.post("/", (req, res, next) => {
       senderId: req.body.senderId,
       _senderId: existingContact._id,
     });
-    
+
     console.log(">> SERVER:MESSAGES:POST:message: ", message);
 
     // Save the message to the database

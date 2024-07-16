@@ -38,14 +38,17 @@ router.post("/", (req, res, next) => {
   const contact = new Contact({
     id: maxContactId,
     name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone,
     description: req.body.description,
-    url: req.body.url,
+    imageUrl: req.body.imageUrl,
   });
 
   // Save the contact to the database
   contact
-    .save()
-    .then((createdContact) => {
+  .save()
+  .then((createdContact) => {
+      console.log(">> SERVER:CONTACTS:POST:createdContact:", createdContact);
       // Respond with status 201 (Created) and send the created contact as JSON
       res.status(201).json({
         message: "Contact added successfully",
